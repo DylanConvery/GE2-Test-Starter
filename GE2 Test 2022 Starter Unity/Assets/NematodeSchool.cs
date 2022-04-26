@@ -11,7 +11,6 @@ public class NematodeSchool : MonoBehaviour
 
     public int count = 10;
 
-    // Start is called before the first frame update
     void Awake()
     {
         // Put your code here
@@ -19,12 +18,7 @@ public class NematodeSchool : MonoBehaviour
         {
             Vector3 position = Random.insideUnitSphere * radius;
             GameObject nematode = Instantiate(prefab, position, Quaternion.identity);
+            nematode.transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }
