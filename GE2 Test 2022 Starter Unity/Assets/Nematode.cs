@@ -8,8 +8,6 @@ public class Nematode : MonoBehaviour
 
     public Material material;
 
-    public GameObject sphere;
-
     private Vector3 scaleChange;
 
     void Awake()
@@ -20,11 +18,23 @@ public class Nematode : MonoBehaviour
 
         for (var i = 0; i < length; i++)
         {
-            GameObject segment = Instantiate(sphere, transform.position, transform.rotation, gameObject.transform);
+            GameObject segment = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            segment.transform.parent = this.transform;
+
+            segment.transform.position =transform.position - (transform.forward * i);
+            segment.transform.rotation = transform.rotation;
             segment.transform.localScale -= scaleChange;
+
+            segment.GetComponent<Renderer>().material = material;
+            segment.GetComponent<Renderer>().material.color = Color.HSVToRGB(i / (float)length, 1, 1);
+
             scaleChange -= new Vector3(0.1f, 0.1f, 0);
-            segment.transform.position = transform.position - (transform.forward * i);
         }
+
+        GameObject lead = this.transform.GetChild(0).gameObject;
+        lead.AddComponent<Boid>();
+        lead.AddComponent<NoiseWander>();
+        lead.AddComponent<ObstacleAvoidance>();
     }
     
     // Start is called before the first frame update
