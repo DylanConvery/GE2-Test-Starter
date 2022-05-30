@@ -6,8 +6,6 @@ public class Nematode : MonoBehaviour
 {
     public int length;
 
-    public Material material;
-
     void Awake()
     {
         // Put your code here!
@@ -19,9 +17,20 @@ public class Nematode : MonoBehaviour
             segment.transform.parent = this.transform;
             segment.transform.position = transform.position - (transform.forward * i);
             segment.transform.rotation = transform.rotation;
-            segment.transform.localScale = new Vector3(1 - (i / (float)length), 1 - (i / (float)length), 1);
-            segment.GetComponent<Renderer>().material.color = Color.HSVToRGB(i / (float)length, 1, 1);
 
+            if (i <= length / 2)
+            {
+                float scale = (1.0f / (length / 2)) * ((float)i + 1.0f);
+                segment.transform.localScale = new Vector3(scale, scale, segment.transform.localScale.z);
+            }
+
+            if (i > length / 2)
+            {
+                float scale = (1.0f / (length / 2)) * ((length + 1) - ((float)i + 1.0f));
+                segment.transform.localScale = new Vector3(scale, scale, segment.transform.localScale.z);
+            }
+
+            segment.GetComponent<Renderer>().material.color = Color.HSVToRGB(i / (float)length, 1, 1);
         }
 
         GameObject head = this.transform.GetChild(0).gameObject;

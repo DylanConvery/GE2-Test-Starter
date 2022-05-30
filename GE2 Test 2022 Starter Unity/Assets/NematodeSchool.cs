@@ -8,7 +8,6 @@ public class NematodeSchool : MonoBehaviour
 
     [Range(1, 5000)]
     public int radius = 50;
-
     public int count = 10;
 
     void Awake()
@@ -16,8 +15,7 @@ public class NematodeSchool : MonoBehaviour
         // Put your code here
         for (int i = 0; i < count; i++)
         {
-            Vector3 position = Random.insideUnitSphere * radius;
-            GameObject nematode = Instantiate(prefab, position, Quaternion.identity);
+            GameObject nematode = Instantiate(prefab, Random.insideUnitSphere * radius, Quaternion.identity);
             nematode.transform.localRotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
         }
     }
